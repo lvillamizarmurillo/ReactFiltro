@@ -469,7 +469,7 @@ http://localhost/producto
 }
 ```
 
-6. Elimina un producto de favoritos:
+7. Elimina un producto de favoritos:
 
 version: 1.0.0
 
@@ -485,14 +485,14 @@ http://localhost/producto
 }
 ```
 
-6. Guarda un producto en la base de datos:
+8. Guarda un producto en la base de datos:
 
 version: 1.0.0
 
 Post
 
 ```
-http://localhost/producto
+http://localhost/producto/agregar/producto
 ```
 
 ```
