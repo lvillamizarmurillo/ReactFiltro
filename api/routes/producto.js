@@ -12,12 +12,16 @@ appProducto.use(passportHelper.authenticate('bearer', {session: false}));
 appProducto.get("/:categoria?", limitGetProducto(), version({
     "1.0.0": Producto.getProductoV1,
     "1.0.1": Producto.getProductoCategoria,
-    "1.0.2": Producto.getFavoritos
+    "1.0.2": Producto.getProductoSoloPorNombre,
+    "1.0.3": Producto.getProductoSoloPorCodigo,
+    "1.0.4": Producto.getFavoritos
 }));
 appProducto.post("/", limitPostProducto(), version({
-    "1.0.0": Producto.getProductoSoloPorNombre,
-    "1.0.1": Producto.getProductoSoloPorCodigo,
-    "1.0.2": Producto.guardarFavoritos
+    "1.0.0": Producto.guardarFavoritos
+}));
+
+appProducto.post("/agregar/producto", limitPostProducto(), version({
+    "1.0.0": Producto.postProducto
 }));
 
 appProducto.delete("/", limitPostProducto(), version({

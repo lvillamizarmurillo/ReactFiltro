@@ -3,6 +3,7 @@ import { ObjectId } from "mongodb";
 import { validarToken } from "../../helpers/jwt.js";
 const productos = await db.getInstance().changeCollection('producto').connect();
 const favorito = await db.getInstance().changeCollection('favoritos').connect();
+const categoria = await db.getInstance().changeCollection('categoria').connect();
 
 export default class Producto {
     static async getProductoV1(req,res){
@@ -138,17 +139,15 @@ export default class Producto {
         await favorito.deleteOne({nombre: req.body.nombre,correo: user.correo})
         res.status(200).json({status: 200,message: 'Se elimino el producto de favoritos.'})
     }
-}    
-
-// export const getProductoCategoria = async (req, res, next) => {
-//     res.status(200).send(':)')
-//     // if(!req.rateLimit) return;
-//     // await Promise.all(DTO[`${req.headers["accept-version"]}`].map(res => res.run(req)));
-//     // const {errors} = validationResult(req);
-//     // if (errors.length) return res.status(400).json({ errors });
-
-
-//     // if(await db.status==500) res.status(await db.status).json({link: `https://http.cat/images/${await db.status}.jpg`, message:":(", data: await db});
-//     // const collection = db.collection("producto");
-//     // res.status(201).json({link: "https://http.cat/images/201.jpg", message:":)", data: await collection.insertOne(req.body)})
-// }
+    static async postProducto(req,res){
+        if (!req.body.nombre) return res.status(400).json({status: 400,message: 'El nombre es obligatorio y debe ser string.'})
+        if (!req.body.categoria) return res.status(400).json({status: 400,message: 'Las categoria es obligatoria y debe ser string.'})
+        if (!req.body.descripcion) return res.status(400).json({status: 400,message: 'La descripcion es obligatorio y debe ser string.'})
+        if (!req.body.precio) return res.status(400).json({status: 400,message: 'El precio es obligatorio y debe ser numerico.'})
+        if (!req.body.descuento) return res.status(400).json({status: 400,message: 'El descuento es obligatorio y debe ser 0 o 1.'})
+        const consulta = await categoria.findOne({nombre: req.body.categoria})
+        if(!consulta) return res.status(400).json({status: 400,message: 'La categoria con la que quieres guardar el producto no existe.'})
+        await productos.insertOne(req.body)
+        res.status(200).json({status: 200,message: 'Se guardo el producto con exito.'})
+    }
+}
