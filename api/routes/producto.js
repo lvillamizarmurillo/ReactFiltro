@@ -11,10 +11,18 @@ appProducto.use(passportHelper.authenticate('bearer', {session: false}));
 
 appProducto.get("/:categoria?", limitGetProducto(), version({
     "1.0.0": Producto.getProductoV1,
-    "1.0.1": Producto.getProductoCategoria
+    "1.0.1": Producto.getProductoCategoria,
+    "1.0.2": Producto.getFavoritos
 }));
 appProducto.post("/", limitPostProducto(), version({
-    "1.0.0": Producto.getProductoCategoria,
+    "1.0.0": Producto.getProductoSoloPorNombre,
+    "1.0.1": Producto.getProductoSoloPorCodigo,
+    "1.0.2": Producto.guardarFavoritos
 }));
+
+appProducto.delete("/", limitPostProducto(), version({
+    "1.0.0": Producto.deleteFavoritos
+}));
+
 
 export default appProducto;

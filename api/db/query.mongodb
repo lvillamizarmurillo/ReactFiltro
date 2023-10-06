@@ -2,6 +2,7 @@ use("db_atlas");
 db.createCollection("producto");
 db.createCollection("categoria");
 db.createCollection("usuarios");
+db.createCollection("favoritos");
 
 db.usuarios.insertMany([
     {
@@ -16,6 +17,20 @@ db.usuarios.insertMany([
     }
 ])
 
+db.favoritos.insertMany([
+    {
+        nombre: "Tenis deportivos 2",
+        correo: "camilo@gmail.com"
+    },
+    {
+        nombre: "Tenis deportivos 3",
+        correo: "camilo@gmail.com"
+    },
+    {
+        nombre: "Tenis deportivos 4",
+        correo: "pablo@gmail.com"
+    }
+])
 
 db.producto.insertMany([
     {
